@@ -1,0 +1,22 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# IDE & Editor folders
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+.cache/
