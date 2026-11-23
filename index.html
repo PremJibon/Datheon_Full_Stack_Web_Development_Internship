@@ -1,16 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Datheon Internship | Shahed Hossain Prem</title>
-  <meta http-equiv="refresh" content="0; url=./Task-1-Portfolio/">
-  <script>
-    window.location.href = "./Task-1-Portfolio/";
-  </script>
+  <title>Datheon Full Stack Internship Showcase | Shahed Hossain Prem</title>
+  <meta name="description" content="Official repository showcase for the Datheon Full Stack Web Development Internship (Cohort 2026). Intern: Shahed Hossain Prem (Ref: DT-2026-3JZXE).">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(17, 24, 39, 0.8);
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --gradient: linear-gradient(135deg, #38bdf8, #6366f1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.25rem;
+    }
+    .hub-container {
+      max-width: 960px;
+      width: 100%;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+    .tasks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .task-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .task-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
+    }
+    .task-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+    .status-completed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .status-scheduled {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+    .task-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .task-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .task-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+    .task-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .stack-pill {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: var(--text-muted);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .btn-primary {
+      background: var(--gradient);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+      transform: translateY(-1px);
+    }
+    .btn-disabled {
+      background: rgba(255, 255, 255, 0.05);
+      color: #64748b;
+      cursor: not-allowed;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+    }
+  </style>
 </head>
-<body style="font-family: sans-serif; background: #0b0f19; color: #f8fafc; text-align: center; padding: 50px;">
-  <h1>Datheon Full Stack Web Development Internship</h1>
-  <p>Redirecting to <a href="./Task-1-Portfolio/" style="color: #38bdf8;">Task 1: Developer Portfolio</a>...</p>
+<body>
+  <div class="hub-container">
+    <div class="badge">Datheon Cohort 2026 • MSME Registered</div>
+    <h1>Full Stack Web Development <span class="gradient-text">Internship Hub</span></h1>
+    <p class="lead">
+      Deliverables portal for <strong>Shahed Hossain Prem</strong> (Ref: <code>DT-2026-3JZXE</code>). All 4 production projects are engineered with pure semantic standards, tested responsive layouts, and continuous Git history.
+    </p>
+
+    <div class="tasks-grid">
+      <!-- Task 1 -->
+      <div class="task-card">
+        <span class="task-status status-completed">✅ Completed</span>
+        <span class="task-num">Task 01</span>
+        <h2 class="task-title">Developer Portfolio</h2>
+        <p class="task-desc">Sleek engineering portfolio showcasing technical projects, credentials, dark/light themes, and native modal dialogs.</p>
+        <div class="task-stack">
+          <span class="stack-pill">HTML5</span>
+          <span class="stack-pill">CSS3 Variables</span>
+          <span class="stack-pill">ES6+</span>
+          <span class="stack-pill">Grid</span>
+        </div>
+        <a href="Task-1-Portfolio/" class="btn btn-primary">Launch Portfolio &rarr;</a>
+      </div>
+
+      <!-- Task 2 -->
+      <div class="task-card">
+        <span class="task-status status-completed">✅ Completed</span>
+        <span class="task-num">Task 02</span>
+        <h2 class="task-title">TaskFlow Pro</h2>
+        <p class="task-desc">Productivity task management application with full CRUD, categories, due dates, drag & drop, and LocalStorage persistence.</p>
+        <div class="task-stack">
+          <span class="stack-pill">LocalStorage</span>
+          <span class="stack-pill">Drag & Drop</span>
+          <span class="stack-pill">Canvas Confetti</span>
+          <span class="stack-pill">CRUD</span>
+        </div>
+        <a href="Task-2-Task-Manager/" class="btn btn-primary">Launch Task Manager &rarr;</a>
+      </div>
+
+      <!-- Task 3 -->
+      <div class="task-card">
+        <span class="task-status status-scheduled">⏳ Day 3</span>
+        <span class="task-num">Task 03</span>
+        <h2 class="task-title">Weather Telemetry App</h2>
+        <p class="task-desc">Live weather telemetry application with real-time global city search, async Fetch API, 5-day forecast, and dynamic gradients.</p>
+        <div class="task-stack">
+          <span class="stack-pill">Fetch API</span>
+          <span class="stack-pill">Async / Await</span>
+          <span class="stack-pill">OpenWeather</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Scheduled for Day 3</button>
+      </div>
+
+      <!-- Task 4 -->
+      <div class="task-card">
+        <span class="task-status status-scheduled">⏳ Day 4</span>
+        <span class="task-num">Task 04</span>
+        <h2 class="task-title">E-Commerce Storefront</h2>
+        <p class="task-desc">Modern e-commerce storefront with FakeStoreAPI catalog, category filtering, persistent slide-out cart drawer, and checkout modal.</p>
+        <div class="task-stack">
+          <span class="stack-pill">FakeStoreAPI</span>
+          <span class="stack-pill">Cart State</span>
+          <span class="stack-pill">CSS Grid</span>
+        </div>
+        <button class="btn btn-disabled" disabled>Scheduled for Day 4</button>
+      </div>
+    </div>
+
+    <footer>
+      <p>Datheon AI Systems & Automation Studio • Technical Directorate Evaluation</p>
+      <p>Intern: <strong>Shahed Hossain Prem</strong> • Kushtia Bheramara Govt. College • <a href="https://github.com/PremJibon/Datheon_Full_Stack_Web_Development_Internship" style="color: var(--accent);">GitHub Repo</a></p>
+    </footer>
+  </div>
 </body>
 </html>

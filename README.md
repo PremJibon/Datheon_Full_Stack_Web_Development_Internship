@@ -14,7 +14,7 @@ This repository houses all deliverables for the **Datheon Full Stack Web Develop
 | # | Task Name | Domain & Scope | Status | Tech Stack | Live Demo / Preview |
 |---|---|---|:---:|---|---|
 | **01** | [Task-1-Portfolio](./Task-1-Portfolio/) | Sleek Developer Portfolio & Showcase | ✅ Completed | HTML5, CSS3, JavaScript (ES6+), CSS Grid/Flexbox | [Live Preview](https://premjibon.github.io/Datheon_Full_Stack_Web_Development_Internship/Task-1-Portfolio/) |
-| **02** | Task-2-Task-Manager | Productivity Application with Full CRUD & LocalStorage | ⏳ Scheduled (Day 2) | HTML5, CSS3, JavaScript (ES6+), LocalStorage API | Coming Soon |
+| **02** | [Task-2-Task-Manager](./Task-2-Task-Manager/) | Productivity Application with Full CRUD & LocalStorage | ✅ Completed | HTML5, CSS3, JavaScript (ES6+), LocalStorage API | [Live Preview](https://premjibon.github.io/Datheon_Full_Stack_Web_Development_Internship/Task-2-Task-Manager/) |
 | **03** | Task-3-Weather-App | Live Weather Telemetry with Asynchronous APIs | ⏳ Scheduled (Day 3) | Fetch API, OpenWeatherMap / WeatherAPI, Async/Await | Coming Soon |
 | **04** | Task-4-Ecommerce-Store | Modern E-Commerce Storefront with Cart State Drawer | ⏳ Scheduled (Day 4) | JavaScript / React, FakeStoreAPI, CSS Grid, State Mgmt | Coming Soon |
 
@@ -32,7 +32,12 @@ Datheon_Full_Stack_Web_Development_Internship/
 │   ├── script.js                      # Theme toggle, smooth scroll, hamburger & modal dialogs
 │   ├── assets/                        # High-res profile photos, resume & assets
 │   └── README.md                      # Task 1 documentation & run guide
-├── Task-2-Task-Manager/               # Task 2 (Day 2)
+├── Task-2-Task-Manager/               # Task 2: Productivity Task Manager
+│   ├── index.html                     # Semantic markup, metrics dashboard, modal dialogs
+│   ├── style.css                      # Responsive styles, theme variables & animations
+│   ├── script.js                      # State engine, CRUD, localStorage, DnD & confetti
+│   ├── assets/                        # Icons & assets
+│   └── README.md                      # Task 2 documentation & run guide
 ├── Task-3-Weather-App/                # Task 3 (Day 3)
 └── Task-4-Ecommerce-Store/            # Task 4 (Day 4)
 ```
