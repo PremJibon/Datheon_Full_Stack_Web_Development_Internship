@@ -171,6 +171,71 @@
       color: #64748b;
       cursor: not-allowed;
     }
+    .profile-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .profile-left {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .profile-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.3);
+    }
+    .profile-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .profile-role {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    .profile-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .profile-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .btn-resume {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+    }
+    .btn-resume:hover {
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
     footer {
       border-top: 1px solid var(--border);
       padding-top: 1.5rem;
@@ -194,6 +259,32 @@
     <p class="lead">
       Deliverables portal for <strong>Shahed Hossain Prem</strong> (Ref: <code>DT-2026-3JZXE</code>). All 4 production projects are engineered with pure semantic standards, tested responsive layouts, and continuous Git history.
     </p>
+
+    <!-- Developer Resume & Profile Banner -->
+    <div class="profile-card">
+      <div class="profile-left">
+        <img src="assets/profile.jpg" alt="Shahed Hossain Prem" class="profile-avatar">
+        <div>
+          <h2 class="profile-name">Shahed Hossain Prem</h2>
+          <p class="profile-role">Full-Stack Developer • Next.js | React | TypeScript | Node.js</p>
+          <p class="profile-sub">Kushtia Bheramara Govt. College • Datheon Cohort 2026 Intern</p>
+        </div>
+      </div>
+      <div class="profile-actions">
+        <a href="assets/Shahed_Hossain_Prem_Resume.pdf" download class="btn btn-resume" title="Download official PDF resume">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download Resume</span>
+        </a>
+        <a href="assets/Shahed_Hossain_Prem_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline" title="Open resume in new tab">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>View PDF</span>
+        </a>
+        <a href="https://www.linkedin.com/in/shahed-hossain-prem-090340382/" target="_blank" rel="noopener noreferrer" class="btn btn-outline" title="LinkedIn Profile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
 
     <div class="tasks-grid">
       <!-- Task 1 -->

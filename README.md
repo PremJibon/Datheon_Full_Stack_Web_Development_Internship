@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![GitHub Profile](https://img.shields.io/badge/GitHub-PremJibon-181717.svg?logo=github)](https://github.com/PremJibon)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Shahed%20Hossain%20Prem-0A66C2.svg?logo=linkedin)](https://www.linkedin.com/in/shahed-hossain-prem-090340382/)
+[![Resume](https://img.shields.io/badge/Resume-Shahed__Hossain__Prem.pdf-E11D48.svg?logo=adobeacrobatreader&logoColor=white)](assets/Shahed_Hossain_Prem_Resume.pdf)
 
 This repository houses all deliverables for the **Datheon Full Stack Web Development Internship** (Cohort 2026, Application ID: `DT-2026-3JZXE`) undertaken by **Shahed Hossain Prem**.
 
@@ -66,4 +67,5 @@ Datheon_Full_Stack_Web_Development_Internship/
 - **Email:** [prempfp96@gmail.com](mailto:prempfp96@gmail.com)
 - **GitHub:** [@PremJibon](https://github.com/PremJibon)
 - **LinkedIn:** [Shahed Hossain Prem](https://www.linkedin.com/in/shahed-hossain-prem-090340382/)
+- **Resume (PDF):** [View / Download Shahed Hossain Prem's Resume](assets/Shahed_Hossain_Prem_Resume.pdf)
 - **Offer Ref:** `DT/HR-INT/2026/3JZXE` • Datheon AI Systems & Automation Studio
