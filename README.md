@@ -16,7 +16,7 @@ This repository houses all deliverables for the **Datheon Full Stack Web Develop
 |---|---|---|:---:|---|---|
 | **01** | [Task-1-Portfolio](./Task-1-Portfolio/) | Sleek Developer Portfolio & Showcase | ✅ Completed | HTML5, CSS3, JavaScript (ES6+), CSS Grid/Flexbox | [Live Preview](https://premjibon.github.io/Datheon_Full_Stack_Web_Development_Internship/Task-1-Portfolio/) |
 | **02** | [Task-2-Task-Manager](./Task-2-Task-Manager/) | Productivity Application with Full CRUD & LocalStorage | ✅ Completed | HTML5, CSS3, JavaScript (ES6+), LocalStorage API | [Live Preview](https://premjibon.github.io/Datheon_Full_Stack_Web_Development_Internship/Task-2-Task-Manager/) |
-| **03** | Task-3-Weather-App | Live Weather Telemetry with Asynchronous APIs | ⏳ Scheduled (Day 3) | Fetch API, OpenWeatherMap / WeatherAPI, Async/Await | Coming Soon |
+| **03** | [Task-3-Weather-App](./Task-3-Weather-App/) | Live Weather Telemetry with Asynchronous APIs | ✅ Completed | Fetch API, OpenWeatherMap API, Async/Await, CSS Flexbox | [Live Preview](https://premjibon.github.io/Datheon_Full_Stack_Web_Development_Internship/Task-3-Weather-App/) |
 | **04** | Task-4-Ecommerce-Store | Modern E-Commerce Storefront with Cart State Drawer | ⏳ Scheduled (Day 4) | JavaScript / React, FakeStoreAPI, CSS Grid, State Mgmt | Coming Soon |
 
 ---
@@ -39,7 +39,12 @@ Datheon_Full_Stack_Web_Development_Internship/
 │   ├── script.js                      # State engine, CRUD, localStorage, DnD & confetti
 │   ├── assets/                        # Icons & assets
 │   └── README.md                      # Task 2 documentation & run guide
-├── Task-3-Weather-App/                # Task 3 (Day 3)
+├── Task-3-Weather-App/                # Task 3: Live Weather Telemetry
+│   ├── index.html                     # Telemetry dashboard markup & SVG icons
+│   ├── style.css                      # Dynamic meteorological gradients & cards
+│   ├── script.js                      # Async Fetch API, try-catch, 5-day forecast Array.map()
+│   ├── config.example.js              # Safe git API key template
+│   └── README.md                      # Task 3 documentation & run guide
 └── Task-4-Ecommerce-Store/            # Task 4 (Day 4)
 ```
 
