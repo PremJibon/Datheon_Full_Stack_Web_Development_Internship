@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'work',
       priority: 'high',
       dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // Tomorrow
+      dueTime: '17:00',
       completed: true,
       createdAt: Date.now() - 3600000 * 5,
       order: 0
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'study',
       priority: 'high',
       dueDate: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0],
+      dueTime: '14:30',
       completed: false,
       createdAt: Date.now() - 3600000 * 3,
       order: 1
@@ -59,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'personal',
       priority: 'medium',
       dueDate: new Date().toISOString().split('T')[0], // Today
+      dueTime: '20:00',
       completed: false,
       createdAt: Date.now() - 3600000 * 2,
       order: 2
@@ -70,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: 'health',
       priority: 'low',
       dueDate: '',
+      dueTime: '',
       completed: false,
       createdAt: Date.now() - 3600000 * 1,
       order: 3
@@ -96,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const taskCategorySelect = document.getElementById('task-category-select');
   const taskPrioritySelect = document.getElementById('task-priority-select');
   const taskDueInput = document.getElementById('task-due-input');
+  const taskDueTimeInput = document.getElementById('task-due-time-input');
 
   // Toolbar
   const searchInput = document.getElementById('search-input');
@@ -121,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const editCategorySelect = document.getElementById('edit-category-select');
   const editPrioritySelect = document.getElementById('edit-priority-select');
   const editDueInput = document.getElementById('edit-due-input');
+  const editTimeInput = document.getElementById('edit-time-input');
   const closeEditModalBtn = document.getElementById('close-edit-modal-btn');
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
@@ -238,14 +244,18 @@ document.addEventListener('DOMContentLoaded', () => {
         result.sort((a, b) => {
           if (!a.dueDate) return 1;
           if (!b.dueDate) return -1;
-          return a.dueDate.localeCompare(b.dueDate);
+          const aFull = a.dueDate + ' ' + (a.dueTime || '23:59');
+          const bFull = b.dueDate + ' ' + (b.dueTime || '23:59');
+          return aFull.localeCompare(bFull);
         });
         break;
       case 'due-desc':
         result.sort((a, b) => {
           if (!a.dueDate) return 1;
           if (!b.dueDate) return -1;
-          return b.dueDate.localeCompare(a.dueDate);
+          const aFull = a.dueDate + ' ' + (a.dueTime || '00:00');
+          const bFull = b.dueDate + ' ' + (b.dueTime || '00:00');
+          return bFull.localeCompare(aFull);
         });
         break;
       case 'priority-desc': {
@@ -268,22 +278,55 @@ document.addEventListener('DOMContentLoaded', () => {
     return result;
   };
 
-  const formatDueDate = (dateStr) => {
+  const formatDueDate = (dateStr, timeStr) => {
     if (!dateStr) return null;
-    const todayStr = new Date().toISOString().split('T')[0];
-    const dueTime = new Date(dateStr + 'T00:00:00');
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+
+    // Format time display (12-hour AM/PM)
+    let formattedTime = '';
+    if (timeStr) {
+      const [h, m] = timeStr.split(':');
+      const hour = parseInt(h, 10);
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour % 12 || 12;
+      formattedTime = ` at ${hour12}:${m} ${ampm}`;
+    }
+
+    // Precise timestamp comparison
+    const targetDateTime = timeStr
+      ? new Date(`${dateStr}T${timeStr}:00`)
+      : new Date(`${dateStr}T23:59:59`);
+
+    const isPast = targetDateTime < now;
+
+    if (dateStr === todayStr) {
+      if (isPast) {
+        return { text: `Overdue Today${formattedTime}`, status: 'is-overdue' };
+      }
+      // Calculate remaining hours/minutes if time is specified
+      if (timeStr) {
+        const diffMs = targetDateTime - now;
+        const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        if (diffHrs < 3) {
+          return { text: `Due in ${diffHrs > 0 ? diffHrs + 'h ' : ''}${diffMins}m${formattedTime}`, status: 'is-today' };
+        }
+      }
+      return { text: `Due Today${formattedTime}`, status: 'is-today' };
+    }
+
     const todayTime = new Date(todayStr + 'T00:00:00');
-    const diffDays = Math.round((dueTime - todayTime) / (1000 * 60 * 60 * 24));
+    const dueDayTime = new Date(dateStr + 'T00:00:00');
+    const diffDays = Math.round((dueDayTime - todayTime) / (1000 * 60 * 60 * 24));
 
     if (diffDays < 0) {
-      return { text: `Overdue by ${Math.abs(diffDays)}d`, status: 'is-overdue' };
-    } else if (diffDays === 0) {
-      return { text: 'Due Today', status: 'is-today' };
+      return { text: `Overdue by ${Math.abs(diffDays)}d${formattedTime}`, status: 'is-overdue' };
     } else if (diffDays === 1) {
-      return { text: 'Due Tomorrow', status: 'is-upcoming' };
+      return { text: `Due Tomorrow${formattedTime}`, status: 'is-upcoming' };
     } else {
       const options = { month: 'short', day: 'numeric' };
-      return { text: dueTime.toLocaleDateString(undefined, options), status: 'is-upcoming' };
+      return { text: `${dueDayTime.toLocaleDateString(undefined, options)}${formattedTime}`, status: 'is-upcoming' };
     }
   };
 
@@ -317,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
       li.setAttribute('data-priority', task.priority);
       li.setAttribute('draggable', filterState.sortBy === 'manual' ? 'true' : 'false');
 
-      const dueInfo = formatDueDate(task.dueDate);
+      const dueInfo = formatDueDate(task.dueDate, task.dueTime);
 
       li.innerHTML = `
         <div class="drag-handle" title="${filterState.sortBy === 'manual' ? 'Drag to reorder' : 'Sorting active (switch to Custom Order to drag)'}" aria-hidden="true">
@@ -396,6 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
       category: taskCategorySelect.value,
       priority: taskPrioritySelect.value,
       dueDate: taskDueInput.value,
+      dueTime: taskDueTimeInput.value,
       completed: false,
       createdAt: Date.now(),
       order: tasks.length
@@ -478,6 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
     editCategorySelect.value = task.category || 'work';
     editPrioritySelect.value = task.priority || 'medium';
     editDueInput.value = task.dueDate || '';
+    editTimeInput.value = task.dueTime || '';
 
     if (typeof editModal.showModal === 'function') {
       editModal.showModal();
@@ -529,6 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
       task.category = editCategorySelect.value;
       task.priority = editPrioritySelect.value;
       task.dueDate = editDueInput.value;
+      task.dueTime = editTimeInput.value;
 
       saveToLocalStorage();
       renderTaskList();
