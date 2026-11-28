@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-weather="clear-day">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SkyPulse | Live Weather Telemetry • Shahed Hossain Prem</title>
+  <meta name="description" content="Live weather telemetry application featuring real-time global city search, dynamic meteorological gradients, detailed atmospheric metrics, and 5-day forecast. Built for Datheon Internship Task 3.">
+  <meta name="keywords" content="Weather App, Weather Telemetry, Fetch API, Async Await, OpenWeatherMap, Datheon Internship, Shahed Hossain Prem">
+  <meta name="author" content="Shahed Hossain Prem">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SkyPulse | Live Weather Telemetry">
+  <meta property="og:description" content="Real-time global weather telemetry with dynamic atmospheric gradients, 5-day forecasts, and async API integration.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌦️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="weather-bg">
+  <!-- Dynamic Atmosphere Canvas / Glow Effect -->
+  <div class="atmosphere-glow" id="atmosphere-glow"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="container header-container">
+      <div class="brand-group">
+        <a href="../" class="back-link" title="Return to Internship Hub" aria-label="Return to Internship Hub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span class="hub-label">Hub</span>
+        </a>
+        <div class="brand-title-wrap">
+          <span class="brand-icon">⚡</span>
+          <div>
+            <h1 class="brand-title">SkyPulse <span class="accent-text">Weather</span></h1>
+            <p class="brand-subtitle">Datheon Internship • Task 3</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Units Toggle (°C / °F) -->
+        <div class="unit-toggle" role="group" aria-label="Temperature Units">
+          <button id="unit-c-btn" class="unit-btn active" data-unit="metric" title="Celsius (°C)">°C</button>
+          <button id="unit-f-btn" class="unit-btn" data-unit="imperial" title="Fahrenheit (°F)">°F</button>
+        </div>
+
+        <!-- API Settings Modal Button -->
+        <button id="api-settings-btn" class="icon-btn" title="Configure OpenWeatherMap API Key" aria-label="Configure API Key">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+
+        <!-- Dark/Light Theme -->
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle Theme" title="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <!-- Search Bar & Controls -->
+    <section class="search-section" aria-label="Search City">
+      <form id="weather-search-form" class="search-form" novalidate>
+        <div class="search-input-wrap">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="city-input" class="search-input" placeholder="Search global city (e.g. London, Tokyo, New York, Dhaka)..." autocomplete="off" required>
+          <button type="button" id="geo-btn" class="geo-btn" title="Detect Current Location" aria-label="Detect Current Location">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg>
+          </button>
+        </div>
+        <button type="submit" class="btn btn-search" id="search-submit-btn">
+          <span>Search</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </form>
+
+      <!-- Quick City Pill Selectors -->
+      <div class="quick-cities" aria-label="Popular Cities">
+        <span class="quick-label">Trending:</span>
+        <div class="quick-pills">
+          <button type="button" class="city-pill" data-city="London">London</button>
+          <button type="button" class="city-pill" data-city="New York">New York</button>
+          <button type="button" class="city-pill" data-city="Tokyo">Tokyo</button>
+          <button type="button" class="city-pill" data-city="Dubai">Dubai</button>
+          <button type="button" class="city-pill" data-city="Paris">Paris</button>
+          <button type="button" class="city-pill" data-city="Dhaka">Dhaka</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Error Alert Banner -->
+    <div id="error-banner" class="error-banner" role="alert" style="display: none;">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <strong id="error-title">City not found</strong>
+        <p id="error-message">Please check spelling or try another location.</p>
+      </div>
+      <button id="close-error-btn" class="close-error-btn" aria-label="Dismiss error">&times;</button>
+    </div>
+
+    <!-- Loading Spinner & Skeleton -->
+    <div id="loading-state" class="loading-state" style="display: none;" aria-live="polite">
+      <div class="telemetry-spinner">
+        <div class="spinner-ring"></div>
+        <div class="spinner-pulse"></div>
+      </div>
+      <p class="loading-text">Fetching atmospheric telemetry...</p>
+    </div>
+
+    <!-- Weather Dashboard (Loaded State) -->
+    <div id="weather-dashboard" class="weather-dashboard">
+      <!-- Primary Current Weather Hero Card -->
+      <section class="current-hero-card" aria-label="Current Weather">
+        <div class="hero-header">
+          <div>
+            <div class="location-badge">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span id="city-name">London</span>, <span id="country-code">GB</span>
+            </div>
+            <p class="current-time" id="current-local-time">Loading local time...</p>
+          </div>
+          <span class="live-pulse-badge">
+            <span class="pulse-indicator"></span>
+            LIVE TELEMETRY
+          </span>
+        </div>
+
+        <div class="hero-body">
+          <div class="temp-display-wrap">
+            <span class="main-temp" id="current-temp">15°</span>
+            <div class="temp-sub-wrap">
+              <span class="feels-like" id="feels-like">Feels like 14°</span>
+              <div class="hi-lo-wrap">
+                <span class="temp-hi">H: <span id="temp-max">18°</span></span>
+                <span class="temp-divider">•</span>
+                <span class="temp-lo">L: <span id="temp-min">11°</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="condition-display-wrap">
+            <div class="weather-icon-wrap" id="weather-icon-container">
+              <img src="" alt="Weather Condition" class="weather-icon-img" id="weather-icon-img">
+            </div>
+            <span class="condition-text" id="weather-condition">Partly Cloudy</span>
+            <span class="condition-desc" id="weather-desc">Scattered Clouds</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Atmospheric Telemetry Grid -->
+      <section class="telemetry-grid-section" aria-label="Atmospheric Metrics">
+        <h2 class="section-title">Atmospheric Telemetry Metrics</h2>
+        <div class="telemetry-grid">
+          <!-- Humidity -->
+          <div class="telemetry-card">
+            <div class="metric-top">
+              <span class="metric-icon">💧</span>
+              <span class="metric-name">Humidity</span>
+            </div>
+            <div class="metric-main">
+              <span class="metric-number" id="val-humidity">68</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar" id="bar-humidity" style="width: 68%;"></div>
+            </div>
+            <span class="metric-caption" id="caption-humidity">Normal range</span>
+          </div>
+
+          <!-- Wind Speed -->
+          <div class="telemetry-card">
+            <div class="metric-top">
+              <span class="metric-icon">💨</span>
+              <span class="metric-name">Wind Speed</span>
+            </div>
+            <div class="metric-main">
+              <span class="metric-number" id="val-wind">4.5</span>
+              <span class="metric-unit" id="unit-wind">m/s</span>
+            </div>
+            <div class="metric-sub-line">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="wind-direction-arrow"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+              <span id="val-wind-dir">SW (220°)</span>
+            </div>
+            <span class="metric-caption" id="caption-wind">Moderate breeze</span>
+          </div>
+
+          <!-- Atmospheric Pressure -->
+          <div class="telemetry-card">
+            <div class="metric-top">
+              <span class="metric-icon">🧭</span>
+              <span class="metric-name">Pressure</span>
+            </div>
+            <div class="metric-main">
+              <span class="metric-number" id="val-pressure">1014</span>
+              <span class="metric-unit">hPa</span>
+            </div>
+            <div class="metric-sub-line">
+              <span>Standard atm: 1013 hPa</span>
+            </div>
+            <span class="metric-caption" id="caption-pressure">Stable barometric</span>
+          </div>
+
+          <!-- Visibility -->
+          <div class="telemetry-card">
+            <div class="metric-top">
+              <span class="metric-icon">👁️</span>
+              <span class="metric-name">Visibility</span>
+            </div>
+            <div class="metric-main">
+              <span class="metric-number" id="val-visibility">10.0</span>
+              <span class="metric-unit">km</span>
+            </div>
+            <div class="metric-sub-line">
+              <span>Clear line of sight</span>
+            </div>
+            <span class="metric-caption">Optimal clarity</span>
+          </div>
+
+          <!-- Sunrise & Sunset -->
+          <div class="telemetry-card dual-metric-card">
+            <div class="metric-top">
+              <span class="metric-icon">🌅</span>
+              <span class="metric-name">Solar Cycle</span>
+            </div>
+            <div class="solar-row">
+              <div class="solar-point">
+                <span class="solar-label">Sunrise</span>
+                <span class="solar-time" id="val-sunrise">06:45 AM</span>
+              </div>
+              <div class="solar-point">
+                <span class="solar-label">Sunset</span>
+                <span class="solar-time" id="val-sunset">05:20 PM</span>
+              </div>
+            </div>
+            <span class="metric-caption" id="caption-daylight">Daylight: 10h 35m</span>
+          </div>
+
+          <!-- Cloud Cover & Dew Point -->
+          <div class="telemetry-card">
+            <div class="metric-top">
+              <span class="metric-icon">☁️</span>
+              <span class="metric-name">Cloudiness</span>
+            </div>
+            <div class="metric-main">
+              <span class="metric-number" id="val-clouds">45</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-bar" id="bar-clouds" style="width: 45%;"></div>
+            </div>
+            <span class="metric-caption" id="caption-clouds">Partly cloudy sky</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5-Day Temperature Forecast Section -->
+      <section class="forecast-section" aria-label="5-Day Weather Forecast">
+        <div class="forecast-header">
+          <h2 class="section-title">5-Day Meteorological Forecast</h2>
+          <span class="forecast-note">Array.map() dynamic projection</span>
+        </div>
+        <div class="forecast-grid" id="forecast-grid">
+          <!-- Dynamically populated via Array.map() in JavaScript -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- API Key & Data Source Settings Modal (<dialog>) -->
+  <dialog id="api-modal" class="api-modal" aria-labelledby="api-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="api-modal-title" class="modal-title">API & Telemetry Settings</h3>
+        <button id="close-api-modal-btn" class="close-modal-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          SkyPulse uses the standard OpenWeatherMap API. Enter your personal free API key below, or use the pre-configured live mock data source for instant evaluation.
+        </p>
+
+        <div class="form-group">
+          <label for="api-key-input" class="form-label">OpenWeatherMap API Key</label>
+          <input type="text" id="api-key-input" class="form-input" placeholder="e.g. 8a3f4b... (stored only in your browser localStorage)" autocomplete="off">
+          <span class="api-hint">Key is stored securely in your browser's LocalStorage and never committed to Git.</span>
+        </div>
+
+        <div class="api-status-badge" id="api-status-badge">
+          <span>Mode:</span> <strong id="api-mode-text">Simulation Demo Mode (Instant Evaluation)</strong>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="use-demo-data-btn" class="btn btn-secondary">Switch to Live Demo Data</button>
+          <button type="button" id="save-api-key-btn" class="btn btn-primary">Save Key & Connect</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="container footer-content">
+      <p>SkyPulse Weather Telemetry • Engineered for <strong>Datheon Full Stack Web Development Internship</strong></p>
+      <p class="footer-meta">Intern: <strong>Shahed Hossain Prem</strong> • Ref: <code>DT-2026-3JZXE</code> • Async Fetch API & Dynamic Gradients</p>
+    </div>
+  </footer>
+
+  <!-- Script include -->
+  <script src="script.js"></script>
+</body>
+</html>
